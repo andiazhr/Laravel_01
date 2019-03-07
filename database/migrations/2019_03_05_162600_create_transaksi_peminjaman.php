@@ -15,7 +15,7 @@ class CreateTransaksiPeminjaman extends Migration
     {
         Schema::create('transaksi_peminjaman', function (Blueprint $table) {
             $table->Increments('id_transaksi_peminjaman');
-            $table->integer('id_film', 11);
+            $table->integer('id_film');
             $table->string('nama_peminjam', 60);
             $table->string('no_ktp', 100);
             $table->string('foto_ktp', 100);

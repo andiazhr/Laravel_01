@@ -53,18 +53,41 @@
             <div class="banner_inner">
 				<div class="container">
 					<div class="row">
-						<div class="col-lg-6">
-							<div class="home_left_img">
-								<img src="{{ asset('assets/img/pemuda.png') }}" alt="">
-							</div>
-						</div>
-						<div class="col-lg-6">
+
+						<div class="col-lg-12" style="margin:100px 0 60px 0">    
 							<div class="banner_content">
-								<h5>Ini Saya</h5>
-								<h2>Raden Andi Azhar Hakim</h2>
-								<p style="font-size:25px">يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ حَقَّ تُقَاتِهِ وَلَا تَمُوتُنَّ إِلَّا وَأَنْتُمْ مُسْلِمُونَ </p>
-								<p style="font-size:16px; margin-top:-25px"> “Hai orang-orang yang beriman, bertakwalah kepada Allah sebenar-benar takwa kepada-Nya; dan janganlah sekali-kali kamu mati melainkan dalam keadaan beragama Islam.” (QS. Ali Imran: 102)</p>
-								<a class="banner_btn" href="#">Discover Now</a>
+                                <h2>Transaksi Peminjaman</h2>
+                                <table class="table table-bordered table-striped">
+                                    <tr>
+                                        <th>Id Transaksi</th>
+                                        <th>Id Film</th>
+                                        <th>Nama Peminjam</th>
+                                        <th>No KTP</th>
+                                        <th>Foto KTP</th>
+                                        <th>Tanggal Pinjam</th>
+                                        <th>Tanggal Kembali</th>
+                                        <th>Harga Sewa</th>
+                                        <th>Status</th>
+                                        <th>Tanggal Input Data</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                    @foreach($transaksi as $rental)
+                                    <tr>
+                                        <td>{{$rental->id_transaksi_peminjaman}}</td>
+                                        <td>{{$rental->id_film}}</td>
+                                        <td>{{$rental->nama_peminjam}}</td>
+                                        <td>{{$rental->no_ktp}}</td>
+                                        <td>{{$rental->foto_ktp}}</td>
+                                        <td>{{$rental->tanggal_pinjam}}</td>
+                                        <td>{{$rental->tanggal_kembali}}</td>
+                                        <td>{{$rental->harga_sewa}}</td>
+                                        <td>{{$rental->status}}</td>
+                                        <td>{{$rental->tanggal_input_data_peminjaman}}</td>
+                                        <td></td>
+                                    </tr>
+                                    @endforeach
+                                </table>
+								<a class="banner_btn" href="{{ url('/') }}">&#11164; Kembali</a>
 							</div>
 						</div>
 					</div>
@@ -72,47 +95,6 @@
             </div>
         </section>
         <!--================End Home Banner Area =================-->
-        
-        <!--================Welcome Area =================-->
-        <section class="welcome_area p_120">
-        	<div class="container">
-        		<div class="row welcome_inner">
-        			<div class="col-lg-6">
-        				<div class="welcome_text">
-        					<h4>Tentang Saya</h4>
-        					<p>Berasal dari Serang, Banten. <br> Di Malang tinggal di jalan Kumis Kucing. <br> Kuliah di Universitas Brawijaya. <br> Pendidikan Vokasi. <br> Jurusan D3 Sistem Informasi. <br> 173140914111014.</p>
-        					<div class="row">
-        						<div class="col-md-4">
-        							<div class="wel_item">
-        								<i class="lnr lnr-database"></i>
-        								<h4>0</h4>
-        								<p>Total Donation</p>
-        							</div>
-        						</div>
-        						<div class="col-md-4">
-        							<div class="wel_item">
-        								<i class="lnr lnr-book"></i>
-        								<h4>±15</h4>
-        								<p>Total Projects</p>
-        							</div>
-        						</div>
-        						<div class="col-md-4">
-        							<div class="wel_item">
-        								<i class="lnr lnr-users"></i>
-        								<h4>0</h4>
-        								<p>Total Volunteers</p>
-        							</div>
-        						</div>
-        					</div>
-        				</div>
-        			</div>
-							</div>
-        				</div>
-        			</div>
-        		</div>
-        	</div>
-        </section>
-        <!--================End Welcome Area =================-->
         
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

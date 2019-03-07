@@ -16,7 +16,7 @@ class CreateKategoriFilm extends Migration
         Schema::create('kategori_film', function (Blueprint $table) {
             $table->Increments('id_kategori_film');
             $table->string('nama_kategori', 40);
-            $table->string('slug', 50);
+            $table->string('slug', 150);
             $table->date('tanggal_input_data_kategori');
         });
     }

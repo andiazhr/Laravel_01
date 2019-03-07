@@ -14,3 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('kategori_film', function(){
+    return "Andiazhr";
+});
+
+Route::get('detail_kategori/{id_kategori_film}', function($id_kategori_film){
+    return "halaman" . $id_kategori_film ;
+});
+
+Route::resource('kategori_film', 'KategoriFilmController')->except(['destroy']);
+
+Route::resource('film', 'FilmController')->except(['destroy']);
+
+Route::resource('transaksi_peminjaman', 'TransaksiPeminjamanController')->except(['destroy']);

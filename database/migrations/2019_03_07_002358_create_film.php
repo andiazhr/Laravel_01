@@ -15,10 +15,10 @@ class CreateFilm extends Migration
     {
         Schema::create('film', function (Blueprint $table) {
             $table->Increments('id_film');
-            $table->integer('id_kategori_film', 11);
+            $table->integer('id_kategori_film');
             $table->string('judul_film', 60);
             $table->string('sutradara', 40);
-            $table->string('tahun_rilis',100);
+            $table->string('tahun_rilis', 10);
             $table->text('sinopsis');
             $table->date('tanggal_input_data_film');
         });
