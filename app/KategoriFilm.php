@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class KategoriFilm extends Model
 {
     protected $table = 'kategori_film';
-    public $timestamp = false;
+    public $timestamps = false;
 }

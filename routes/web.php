@@ -28,3 +28,7 @@ Route::resource('kategori_film', 'KategoriFilmController')->except(['destroy']);
 Route::resource('film', 'FilmController')->except(['destroy']);
 
 Route::resource('transaksi_peminjaman', 'TransaksiPeminjamanController')->except(['destroy']);
+
+Route::get('master', function(){
+    return view ('dashboard/index');
+});
