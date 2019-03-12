@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    @extends('Layouts.master')
+    @extends('Layouts.master2')
     @section('masternaupal')
         <center style="background-color:#fff">ini content</center>
     @endsection
