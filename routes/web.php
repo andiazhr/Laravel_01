@@ -23,7 +23,7 @@ Route::get('detail_kategori/{id_kategori_film}', function($id_kategori_film){
     return "halaman" . $id_kategori_film ;
 });
 
-Route::resource('kategori_film', 'KategoriFilmController')->except(['destroy']);
+Route::resource('kategori', 'KategoriFilmController')->except(['destroy']);
 
 Route::resource('film', 'FilmController')->except(['destroy']);
 

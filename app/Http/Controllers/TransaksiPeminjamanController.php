@@ -13,10 +13,12 @@ class TransaksiPeminjamanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $transaksi = TransaksiPeminjaman::all();
-        return view('transaksi_peminjaman', compact('transaksi'));
+        $transaksi = TransaksiPeminjaman::when($request->transaksi, function ($query) use ($request) {
+            $query->where('nama_peminjam', 'like', "%{$request->transaksi}%");
+        })->get();
+        return view('Transaksi.index', compact('transaksi'));
     }
 
     /**

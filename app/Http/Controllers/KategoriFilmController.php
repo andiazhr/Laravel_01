@@ -13,10 +13,12 @@ class KategoriFilmController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        $kategori_film = KategoriFilm::all();
-        return view('kategori_film', compact('kategori_film'));
+        $kategori_film = KategoriFilm::when($request->kategori, function ($query) use ($request) {
+            $query->where('nama_kategori', 'like', "%{$request->kategori}%");
+        })->get();
+        return view('Kategori.index', compact('kategori_film'));
     }
 
     /**
@@ -83,5 +85,13 @@ class KategoriFilmController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function paginate(\Illuminate\Http\Request $request)
+    {
+        $kategori_film = KategoriFilm::when($request->keyword, function ($query) use ($request) {
+            $query->where('nama_kategori', 'like', "%{$request->keyword}%");
+        })->get();
+        return view('Kategori.index', compact('kategori_film'));
     }
 }

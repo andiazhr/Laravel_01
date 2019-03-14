@@ -13,15 +13,17 @@ class FilmController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
         // $film = App\Film::all();
 
         // foreach ($film as $movie){
         //     echo $movie->name;
         // }
-        $movie = Film::all();
-        return view('film', compact('movie'));
+        $movie = Film::when($request->film, function ($query) use ($request) {
+            $query->where('judul_film', 'like', "%{$request->film}%");
+        })->get();
+        return view('Film.index', compact('movie'));
     }
 
     /**
