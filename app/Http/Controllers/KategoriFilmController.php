@@ -28,7 +28,7 @@ class KategoriFilmController extends Controller
      */
     public function create()
     {
-        //
+        return view('Kategori.create');
     }
 
     /**
@@ -39,7 +39,18 @@ class KategoriFilmController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_kategori'=> 'required',
+            'slug' => 'required',
+            'tanggal_input_data_kategori' => 'required'
+          ]);
+          $kategori_film = new KategoriFilm([
+            'nama_kategori' => $request->get('nama_kategori'),
+            'slug'=> $request->get('slug'),
+            'tanggal_input_data_kategori'=> $request->get('tanggal_input_data_kategori')
+          ]);
+          $kategori_film->save();
+          return redirect('kategori')->with('success', 'Kategori Film Ditambahkan');
     }
 
     /**
@@ -48,9 +59,10 @@ class KategoriFilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_kategori_film)
     {
-        //
+        $kategori_film = KategoriFilm::find($id_kategori_film);
+        return view('Kategori.info', compact('kategori_film'));
     }
 
     /**
@@ -59,9 +71,11 @@ class KategoriFilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_kategori_film)
     {
-        //
+        $kategori_film = KategoriFilm::find($id_kategori_film);
+
+        return view('Kategori.edit', compact('kategori_film'));
     }
 
     /**
@@ -71,9 +85,21 @@ class KategoriFilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_kategori_film)
     {
-        //
+        $request->validate([
+            'nama_kategori'=> 'required',
+            'slug' => 'required',
+            'tanggal_input_data_kategori' => 'required'
+          ]);
+    
+          $kategori_film = KategoriFilm::find($id_kategori_film);
+          $kategori_film->nama_kategori = $request->get('nama_kategori');
+          $kategori_film->slug = $request->get('slug');
+          $kategori_film->tanggal_input_data_kategori = $request->get('tanggal_input_data_kategori');
+          $kategori_film->save();
+    
+          return redirect('kategori')->with('success', 'Kategori Film Diperbaharui');
     }
 
     /**
@@ -82,16 +108,11 @@ class KategoriFilmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_kategori_film)
     {
-        //
-    }
+        $kategori_film = KategoriFilm::find($id_kategori_film);
+        $kategori_film->delete();
 
-    public function paginate(\Illuminate\Http\Request $request)
-    {
-        $kategori_film = KategoriFilm::when($request->keyword, function ($query) use ($request) {
-            $query->where('nama_kategori', 'like', "%{$request->keyword}%");
-        })->get();
-        return view('Kategori.index', compact('kategori_film'));
+        return redirect('kategori')->with('succes', 'Kategori Film Terhapus');
     }
 }

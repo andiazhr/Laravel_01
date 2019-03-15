@@ -23,11 +23,14 @@ Route::get('detail_kategori/{id_kategori_film}', function($id_kategori_film){
     return "halaman" . $id_kategori_film ;
 });
 
-Route::resource('kategori', 'KategoriFilmController')->except(['destroy']);
+//kategori
+Route::resource('kategori', 'KategoriFilmController');
 
-Route::resource('film', 'FilmController')->except(['destroy']);
+//film
+Route::resource('film', 'FilmController');
 
-Route::resource('transaksi_peminjaman', 'TransaksiPeminjamanController')->except(['destroy']);
+//transaksi peminjaman
+Route::resource('transaksi_peminjaman', 'TransaksiPeminjamanController');
 
 Route::get('master', function(){
     return view ('dashboard.content');

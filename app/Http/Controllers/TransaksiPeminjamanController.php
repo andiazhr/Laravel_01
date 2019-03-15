@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\TransaksiPeminjaman;
+use App\Film;
 
 use Illuminate\Http\Request;
 
@@ -28,7 +29,8 @@ class TransaksiPeminjamanController extends Controller
      */
     public function create()
     {
-        //
+        $movie = Film::all();
+        return view('Transaksi.create', compact('movie'));
     }
 
     /**
@@ -39,7 +41,30 @@ class TransaksiPeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_film'=> 'required|integer',
+            'nama_peminjam' => 'required',
+            'no_ktp' => 'required',
+            'foto_ktp'=> 'required',
+            'tanggal_pinjam' => 'required',
+            'tanggal_kembali' => 'required',
+            'harga_sewa'=> 'required',
+            'status' => 'required',
+            'tanggal_input_data_peminjaman' => 'required'
+          ]);
+          $transaksi = new TransaksiPeminjaman([
+            'id_film' => $request->get('id_film'),
+            'nama_peminjam'=> $request->get('nama_peminjam'),
+            'no_ktp'=> $request->get('no_ktp'),
+            'foto_ktp' => $request->get('foto_ktp'),
+            'tanggal_pinjam'=> $request->get('tanggal_pinjam'),
+            'tanggal_kembali'=> $request->get('tanggal_kembali'),
+            'harga_sewa' => $request->get('harga_sewa'),
+            'status'=> $request->get('status'),
+            'tanggal_input_data_peminjaman'=> $request->get('tanggal_input_data_peminjaman')
+          ]);
+          $transaksi->save();
+          return redirect('kategori')->with('success', 'Kategori Film Ditambahkan');
     }
 
     /**
@@ -48,9 +73,11 @@ class TransaksiPeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id_transaksi)
     {
-        //
+        $transaksi = TransaksiPeminjaman::find($id_transaksi);
+        $movie = Film::all();
+        return view ('Transaksi.info', compact('transaksi','movie'));
     }
 
     /**
@@ -59,9 +86,12 @@ class TransaksiPeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id_transaksi)
     {
-        //
+        $transaksi = TransaksiPeminjaman::find($id_transaksi);
+        $movie = Film::all();
+        $stat=$transaksi['status'];
+        return view('Transaksi.edit', compact('transaksi', 'movie'));
     }
 
     /**
@@ -71,9 +101,33 @@ class TransaksiPeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id_transaksi)
     {
-        //
+        $request->validate([
+            'id_film'=> 'required|integer',
+            'nama_peminjam' => 'required',
+            'no_ktp' => 'required',
+            'foto_ktp'=> 'required',
+            'tanggal_pinjam' => 'required',
+            'tanggal_kembali' => 'required',
+            'harga_sewa'=> 'required',
+            'status' => 'required',
+            'tanggal_input_data_peminjaman' => 'required'
+          ]);
+    
+          $transaksi = TransaksiPeminjaman::find($id_transaksi);
+          $transaksi->id_film = $request->get('id_film');
+          $transaksi->nama_peminjam = $request->get('nama_peminjam');
+          $transaksi->no_ktp = $request->get('no_ktp');
+          $transaksi->foto_ktp = $request->get('foto_ktp');
+          $transaksi->tanggal_pinjam = $request->get('tanggal_pinjam');
+          $transaksi->tanggal_kembali = $request->get('tanggal_kembali');
+          $transaksi->harga_sewa = $request->get('harga_sewa');
+          $transaksi->status = $request->get('status');
+          $transaksi->tanggal_input_data_peminjaman = $request->get('tanggal_input_data_peminjaman');
+          $transaksi->save();
+    
+          return redirect('transaksi_peminjaman')->with('success', 'Transaksi Peminjaman Diperbaharui');
     }
 
     /**
@@ -82,8 +136,11 @@ class TransaksiPeminjamanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id_transaksi)
     {
-        //
+        $transaksi = TransaksiPeminjaman::find($id_transaksi);
+        $transaksi->delete();
+
+        return redirect('transaksi_peminjaman')->with('succes', 'Transaksi Peminjaman Terhapus');
     }
 }

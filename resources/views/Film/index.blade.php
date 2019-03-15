@@ -14,13 +14,18 @@
 
     <!-- Main content -->
     <section class="content">
+    @if(session()->get('success'))
+              <div class="alert alert-success">
+                {{ session()->get('success') }}  
+              </div>
+      @endif
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <!-- /.box-header -->
             <div class="box-header">
-              <h3 class="box-title">Film</h3>
-
+              <h3 class="box-title" style="margin: 0 20px 0 0">Film</h3>
+              <a href="{{ url('film/create') }}" class="btn btn-primary">+ &nbsp;Tambah Data</a>
               <div class="box-tools">
               <form action="{{ url()->current() }}">
                 <div class="input-group input-group-sm" style="width: 200px;">
@@ -43,18 +48,32 @@
                   <th>Tahun Rilis</th>
                   <th>Sinopsis</th>
                   <th>Tanggal Input Data</th>
-                  <th>Aksi</th>
+                  <th>Edit</th>
+                  <th>Delete</th>
+                  <th>Info</th>
                 </tr>
-                @foreach($movie as $film)
+                @foreach($movie as $nomor => $film)
                     <tr>
-                        <td>{{$film->id_film}}</td>
+                        <td>{{$nomor +1}}</td>
                         <td>{{$film->id_kategori_film}}</td>
                         <td>{{$film->judul_film}}</td>
                         <td>{{$film->sutradara}}</td>
                         <td>{{$film->tahun_rilis}}</td>
                         <td>{{$film->sinopsis}}</td>
                         <td>{{$film->tanggal_input_data_film}}</td>
-                        <td></td>
+                        <td>
+                            <a href="{{ route('film.edit',$film->id_film)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                          <form action="{{ route('film.destroy', $film->id_film)}}" method="post">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
+                          </form>
+                        </td>
+                        <td>
+                          <a href="{{ route('film.show',$film->id_film)}}" class="btn btn-info btn-sm"><i class="fa fa-info"></i></a>
+                        </td>
                     </tr>
                 @endforeach
               </table>

@@ -14,13 +14,18 @@
 
     <!-- Main content -->
     <section class="content">
+    @if(session()->get('success'))
+              <div class="alert alert-success">
+                {{ session()->get('success') }}  
+              </div>
+      @endif
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
             <!-- /.box-header -->
             <div class="box-header">
-              <h3 class="box-title">Transaksi Peminjaman</h3>
-
+              <h3 class="box-title" style="margin: 0 20px 0 0">Transaksi Peminjaman</h3>
+              <a href="{{ url('transaksi_peminjaman/create') }}" class="btn btn-primary">+ &nbsp;Tambah Data</a>
               <div class="box-tools">
               <form action="{{ url()->current() }}">
                 <div class="input-group input-group-sm" style="width: 200px;">
@@ -46,11 +51,13 @@
                     <th>Harga Sewa</th>
                     <th>Status</th>
                     <th>Tanggal Input Data</th>
-                    <th>Aksi</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Info</th>
                 </tr>
-                @foreach($transaksi as $rental)
+                @foreach($transaksi as $nomor => $rental)
                     <tr>
-                        <td>{{$rental->id_transaksi_peminjaman}}</td>
+                        <td>{{$nomor +1}}</td>
                         <td>{{$rental->id_film}}</td>
                         <td>{{$rental->nama_peminjam}}</td>
                         <td>{{$rental->no_ktp}}</td>
@@ -60,7 +67,19 @@
                         <td>{{$rental->harga_sewa}}</td>
                         <td>{{$rental->status}}</td>
                         <td>{{$rental->tanggal_input_data_peminjaman}}</td>
-                        <td></td>
+                        <td>
+                            <a href="{{ route('transaksi_peminjaman.edit',$rental->id_transaksi_peminjaman)}}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>
+                        </td>
+                        <td>
+                          <form action="{{ route('transaksi_peminjaman.destroy', $rental->id_transaksi_peminjaman)}}" method="post">
+                              @csrf
+                              @method('DELETE')
+                              <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash"></i></button>
+                          </form>
+                        </td>
+                        <td>
+                          <a href="{{ route('transaksi_peminjaman.show',$rental->id_transaksi_peminjaman)}}" class="btn btn-info btn-sm"><i class="fa fa-info"></i></a>
+                        </td>
                     </tr>
                 @endforeach
               </table>
